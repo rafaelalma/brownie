@@ -10,5 +10,8 @@
     "brownie"
   ],
   "author": "rafaelalma",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "4.8.3"
+  }
 }
