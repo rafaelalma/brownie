@@ -1,13 +1,20 @@
 import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
+
+import dogRouter from './routes/dogRouter';
+
 const app = express();
 app.use(express.json());
 
-const PORT = 3000;
+const PORT = process.env.PORT ?? 3001;
 
 app.get('/ping', (_req, res) => {
-  console.log('someone pinged here');
+  console.log('Someone pinged here');
   res.send('pong');
 });
+
+app.use('/api/dogs', dogRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
