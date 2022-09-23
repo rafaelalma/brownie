@@ -2,21 +2,27 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 dotenv.config();
 
+import logger from '../../utils/logger';
+
 const url = process.env.MONGODB_URI;
 
-console.log('Connecting to', url);
-
 if (url) {
+  logger.info('Connecting to', url);
+
   mongoose
     .connect(url)
     .then(() => {
-      console.log('Connected to MongoDB');
+      logger.info('Connected to MongoDB');
     })
-    .catch((error) => {
-      console.log('Error connecting to MongoDB:', error.message);
+    .catch((error: unknown) => {
+      let errorMessage = 'Error connecting to MongoDB.';
+      if (error instanceof Error) {
+        errorMessage += ' Error: ' + error.message;
+      }
+      logger.error(errorMessage);
     });
 } else {
-  console.log('No MongoDB URI');
+  logger.error('No MongoDB URI');
 }
 
 const dogSchema = new mongoose.Schema({

@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import dogRouter from './routes/dogRouter';
+import logger from '../utils/logger';
 
 const app = express();
 app.use(express.json());
@@ -10,12 +11,12 @@ app.use(express.json());
 const PORT = process.env.PORT ?? 3001;
 
 app.get('/ping', (_req, res) => {
-  console.log('Someone pinged here');
+  logger.info('Someone pinged here');
   res.send('pong');
 });
 
 app.use('/api/dogs', dogRouter);
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  logger.info(`Server running on port ${PORT}`);
 });
