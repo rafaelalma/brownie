@@ -1,10 +1,9 @@
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-dotenv.config();
 
+import config from '../../utils/config';
 import logger from '../../utils/logger';
 
-const url = process.env.MONGODB_URI;
+const url = config.MONGODB_URI;
 
 if (url) {
   logger.info('Connecting to', url);
