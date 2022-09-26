@@ -2,9 +2,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 import dogRouter from './routes/dogRouter';
-import logger from '../utils/logger';
-import config from '../utils/config';
-import middleware from '../utils/middleware';
+import logger from './utils/logger';
+import config from './utils/config';
+import middleware from './utils/middleware';
 
 const app = express();
 
