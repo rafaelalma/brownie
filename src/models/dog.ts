@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 const dogSchema = new mongoose.Schema({
   dateAdded: Date,
@@ -14,15 +14,15 @@ const dogSchema = new mongoose.Schema({
   isCatFriendly: Boolean,
   size: String,
   youtubeUrl: String,
-});
+})
 
 dogSchema.set('toJSON', {
   transform: (_document, returnedObject) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-    returnedObject.id = returnedObject._id.toString();
-    delete returnedObject._id;
-    delete returnedObject.__v;
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
   },
-});
+})
 
-export default mongoose.model('Dog', dogSchema);
+export default mongoose.model('Dog', dogSchema)

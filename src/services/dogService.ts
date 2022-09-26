@@ -1,15 +1,15 @@
-import DogModel from '../models/dog';
-import { Dog } from '../types';
+import DogModel from '../models/dog'
+import { Dog } from '../types'
 
 const getDogs = async () => {
-  const dogs: Dog[] = await DogModel.find({});
-  return dogs;
-};
+  const dogs: Dog[] = await DogModel.find({})
+  return dogs
+}
 
 const getDog = async (id: string) => {
-  const dog: Dog | null = await DogModel.findById(id);
-  return dog;
-};
+  const dog: Dog | null = await DogModel.findById(id)
+  return dog
+}
 
 const addDog = async (body: Dog) => {
   const {
@@ -25,7 +25,7 @@ const addDog = async (body: Dog) => {
     isCatFriendly,
     size,
     youtubeUrl,
-  } = body;
+  } = body
 
   const dog = new DogModel({
     dateAdded: new Date(),
@@ -41,16 +41,16 @@ const addDog = async (body: Dog) => {
     isCatFriendly,
     size,
     youtubeUrl,
-  });
+  })
 
-  const newDog = await dog.save();
+  const newDog = await dog.save()
 
-  return newDog;
-};
+  return newDog
+}
 
 const deleteDog = async (id: string) => {
-  return await DogModel.findByIdAndDelete(id);
-};
+  return await DogModel.findByIdAndDelete(id)
+}
 
 const updateDog = async (id: string, body: Dog) => {
   const {
@@ -66,7 +66,7 @@ const updateDog = async (id: string, body: Dog) => {
     isCatFriendly,
     size,
     youtubeUrl,
-  } = body;
+  } = body
 
   const dog = {
     name,
@@ -81,12 +81,12 @@ const updateDog = async (id: string, body: Dog) => {
     isCatFriendly,
     size,
     youtubeUrl,
-  };
+  }
 
-  const updatedDog = await DogModel.findByIdAndUpdate(id, dog, { new: true });
+  const updatedDog = await DogModel.findByIdAndUpdate(id, dog, { new: true })
 
-  return updatedDog;
-};
+  return updatedDog
+}
 
 export default {
   getDogs,
@@ -94,4 +94,4 @@ export default {
   addDog,
   deleteDog,
   updateDog,
-};
+}
