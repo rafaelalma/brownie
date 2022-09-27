@@ -1,5 +1,5 @@
 import DogModel from '../models/dog'
-import { Dog } from '../types'
+import { Dog, NewDog } from '../types'
 
 const getDogs = async () => {
   const dogs: Dog[] = await DogModel.find({})
@@ -11,7 +11,7 @@ const getDog = async (id: string) => {
   return dog
 }
 
-const addDog = async (body: Dog) => {
+const addDog = async (body: NewDog) => {
   const {
     name,
     kennel,
@@ -52,7 +52,7 @@ const deleteDog = async (id: string) => {
   return await DogModel.findByIdAndDelete(id)
 }
 
-const updateDog = async (id: string, body: Dog) => {
+const updateDog = async (id: string, body: NewDog) => {
   const {
     name,
     kennel,

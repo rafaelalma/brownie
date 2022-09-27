@@ -22,3 +22,5 @@ export interface Dog {
   size: Size
   youtubeUrl: string
 }
+
+export type NewDog = Omit<Dog, 'id' | 'dateAdded'>
