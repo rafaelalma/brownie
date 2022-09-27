@@ -35,7 +35,7 @@ router.post('/', async (req, res, next) => {
 
   try {
     const newDog = await dogService.addDog(body)
-    res.json(newDog)
+    res.status(201).json(newDog)
   } catch (error) {
     next(error)
   }
