@@ -8,9 +8,9 @@ const router = express.Router()
 router.get('/', async (_req, res, next) => {
   try {
     const dogs = await dogService.getDogs()
-    res.json(dogs)
+    return res.json(dogs)
   } catch (error) {
-    next(error)
+    return next(error)
   }
 })
 
@@ -21,23 +21,29 @@ router.get('/:id', async (req, res, next) => {
     const dog = await dogService.getDog(id)
 
     if (dog) {
-      res.json(dog)
+      return res.json(dog)
     } else {
-      res.status(404).end()
+      return res.status(404).end()
     }
   } catch (error) {
-    next(error)
+    return next(error)
   }
 })
 
 router.post('/', async (req, res, next) => {
   const body = req.body as Dog
 
+  const { name } = body
+
+  if (!name) {
+    return res.status(400).json({ error: 'dog must have a name' })
+  }
+
   try {
     const newDog = await dogService.addDog(body)
-    res.status(201).json(newDog)
+    return res.status(201).json(newDog)
   } catch (error) {
-    next(error)
+    return next(error)
   }
 })
 
@@ -46,9 +52,9 @@ router.delete('/:id', async (req, res, next) => {
 
   try {
     await dogService.deleteDog(id)
-    res.status(204).end()
+    return res.status(204).end()
   } catch (error) {
-    next(error)
+    return next(error)
   }
 })
 
@@ -58,9 +64,9 @@ router.put('/:id', async (req, res, next) => {
 
   try {
     const updatedDog = await dogService.updateDog(id, body)
-    res.json(updatedDog)
+    return res.json(updatedDog)
   } catch (error) {
-    next(error)
+    return next(error)
   }
 })
 
