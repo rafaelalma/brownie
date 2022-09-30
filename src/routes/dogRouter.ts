@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import express from 'express'
+
 import dogService from '../services/dogService'
-import { Dog } from '../types'
+import { Dog, DogFields } from '../types'
+import toNewDog from '../utils/toNewDog'
 
 const router = express.Router()
 
@@ -31,17 +33,17 @@ router.get('/:id', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-  const body = req.body as Dog
-
-  const { name } = body
-
-  if (!name) {
-    return res.status(400).json({ error: 'dog must have a name' })
-  }
-
   try {
-    const newDog = await dogService.addDog(body)
-    return res.status(201).json(newDog)
+    const newDog = toNewDog(req.body as DogFields)
+
+    const { name } = newDog
+
+    if (!name) {
+      return res.status(400).json({ error: 'dog must have a name' })
+    }
+
+    const addedDog = await dogService.addDog(newDog)
+    return res.status(201).json(addedDog)
   } catch (error) {
     return next(error)
   }

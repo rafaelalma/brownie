@@ -3,7 +3,7 @@ import supertest from 'supertest'
 
 import app from '../app'
 import DogModel from '../models/dog'
-import { Dog } from '../types'
+import { Dog, NewDog, Sex, Size } from '../types'
 import helper from './testHelper'
 
 const api = supertest(app)
@@ -69,19 +69,20 @@ describe('viewing a specific dog', () => {
 
 describe('addition of a new dog', () => {
   test('succeeds with valid data', async () => {
-    const newDog = {
+    const newDog: NewDog = {
       name: 'Dog 3',
       kennel: 'D3',
-      birthDate: '01/01',
+      birthDate: new Date('01/01/22'),
       breed: 'Podenco',
+      sex: Sex.Male,
       comments: 'sin comentarios',
       isSpayedOrNeutered: true,
       height: 40,
       length: 50,
       weight: 10,
       isCatFriendly: true,
-      size: 'medium little',
-      youtubeUrl: '',
+      size: Size.MediumLittle,
+      youtubeUrl: 'sin url',
     }
 
     await api
@@ -97,20 +98,21 @@ describe('addition of a new dog', () => {
     expect(names).toContain('Dog 3')
   })
 
-  test('fails with status code 400 if data is invalid (no name)', async () => {
-    const newDog = {
+  test('fails with status code 400 if data is invalid', async () => {
+    const newDog: NewDog = {
       name: '',
       kennel: 'D4',
-      birthDate: '01/01',
+      birthDate: new Date('01/01/22'),
       breed: 'Podenco',
+      sex: Sex.Female,
       comments: 'sin comentarios',
       isSpayedOrNeutered: true,
       height: 40,
       length: 50,
       weight: 10,
       isCatFriendly: true,
-      size: 'medium little',
-      youtubeUrl: '',
+      size: Size.MediumLittle,
+      youtubeUrl: 'sin url',
     }
 
     await api.post('/api/dogs').send(newDog).expect(400)

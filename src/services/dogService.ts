@@ -17,6 +17,7 @@ const addDog = async (body: NewDog) => {
     kennel,
     birthDate,
     breed,
+    sex,
     comments,
     isSpayedOrNeutered,
     height,
@@ -33,6 +34,7 @@ const addDog = async (body: NewDog) => {
     kennel,
     birthDate,
     breed,
+    sex,
     comments,
     isSpayedOrNeutered,
     height,
@@ -43,7 +45,7 @@ const addDog = async (body: NewDog) => {
     youtubeUrl,
   })
 
-  const newDog = await dog.save()
+  const newDog = (await dog.save()) as Dog
 
   return newDog
 }
@@ -58,6 +60,7 @@ const updateDog = async (id: string, body: NewDog) => {
     kennel,
     birthDate,
     breed,
+    sex,
     comments,
     isSpayedOrNeutered,
     height,
@@ -73,6 +76,7 @@ const updateDog = async (id: string, body: NewDog) => {
     kennel,
     birthDate,
     breed,
+    sex,
     comments,
     isSpayedOrNeutered,
     height,
@@ -83,7 +87,9 @@ const updateDog = async (id: string, body: NewDog) => {
     youtubeUrl,
   }
 
-  const updatedDog = await DogModel.findByIdAndUpdate(id, dog, { new: true })
+  const updatedDog = (await DogModel.findByIdAndUpdate(id, dog, {
+    new: true,
+  })) as Dog
 
   return updatedDog
 }

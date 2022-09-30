@@ -1,34 +1,36 @@
 import DogModel from '../models/dog'
-import { NewDog } from '../types'
+import { NewDog, Sex, Size } from '../types'
 
 const initialDogs: NewDog[] = [
   {
     name: 'Dog 1',
     kennel: 'D1',
-    birthDate: '30/10',
+    birthDate: new Date('10/30/92'),
     breed: 'Podenco',
+    sex: Sex.Male,
     comments: 'sin comentarios',
     isSpayedOrNeutered: true,
     height: 60,
     length: 90,
     weight: 15,
     isCatFriendly: true,
-    size: 'medium',
-    youtubeUrl: '',
+    size: Size.Medium,
+    youtubeUrl: 'sin url',
   },
   {
     name: 'Dog 2',
     kennel: 'D2',
-    birthDate: '21/12',
+    birthDate: new Date('12/21/98'),
     breed: 'Bodeguero',
-    comments: '',
+    sex: Sex.Female,
+    comments: 'sin comentarios',
     isSpayedOrNeutered: true,
     height: 40,
     length: 50,
     weight: 12,
     isCatFriendly: true,
-    size: 'medium little',
-    youtubeUrl: '',
+    size: Size.MediumLittle,
+    youtubeUrl: 'sin url',
   },
 ]
 
