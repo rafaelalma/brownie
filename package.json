@@ -37,12 +37,6 @@
     "express": "4.18.1",
     "mongoose": "6.6.1"
   },
-  "prettier": {
-    "trailingComma": "es5",
-    "tabWidth": 2,
-    "semi": false,
-    "singleQuote": true
-  },
   "jest": {
     "testEnvironment": "node"
   }
