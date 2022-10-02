@@ -1,5 +1,6 @@
 import express from 'express'
 import mongoose from 'mongoose'
+import cors from 'cors'
 
 import dogRouter from './routes/dogRouter'
 import logger from './utils/logger'
@@ -28,6 +29,9 @@ if (url) {
 } else {
   logger.error('No MongoDB URI')
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+app.use(cors())
 
 app.use(express.json())
 
