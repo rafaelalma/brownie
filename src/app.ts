@@ -30,6 +30,8 @@ if (url) {
   logger.error('No MongoDB URI')
 }
 
+app.use(express.static('build-app'))
+
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call
 app.use(cors())
 

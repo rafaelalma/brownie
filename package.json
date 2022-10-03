@@ -7,8 +7,13 @@
     "test": "NODE_ENV=test jest --verbose --runInBand --forceExit",
     "tsc": "tsc",
     "dev": "NODE_ENV=development ts-node-dev src/index.ts",
-    "start": "npm run tsc && NODE_ENV=production node build/index.js",
-    "lint": "eslint --ext .ts ."
+    "start": "NODE_ENV=production node build/index.js",
+    "lint": "eslint --ext .ts .",
+    "build:api": "npm run tsc",
+    "build:app": "rm -rf build-app && cd ../brownie-app && npm run build && cp -r build ../brownie-api/build-app",
+    "deploy:api": "npm run build:api && fly deploy",
+    "deploy:app": "npm run build:app && npm run deploy:api",
+    "logs:prod": "fly logs"
   },
   "keywords": [
     "brownie"
