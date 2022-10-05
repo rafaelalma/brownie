@@ -1,11 +1,5 @@
 import { DogFields, NewDog, Sex, Size } from '../types'
 
-const getTypeError = (message: string) => {
-  const typeError = new Error(message)
-  typeError.name = 'TypeError'
-  return typeError
-}
-
 const isString = (text: unknown): text is string => {
   return typeof text === 'string' || text instanceof String
 }
@@ -36,100 +30,105 @@ const isSize = (param: any): param is Size => {
 
 const parseName = (name: unknown): string => {
   if (!name || !isString(name)) {
-    throw getTypeError('incorrect or missing name')
+    const typeError = new Error('incorrect or missing name')
+    typeError.name = 'TypeError'
+    throw typeError
   }
 
   return name
 }
 
-const parseKennel = (kennel: unknown): string => {
+const parseKennel = (kennel: unknown): string | null => {
   if (!kennel || !isString(kennel)) {
-    throw getTypeError('incorrect or missing kennel')
+    return null
   }
 
   return kennel
 }
 
-const parseBirthDate = (birthDate: unknown): Date => {
+const parseBirthDate = (birthDate: unknown): Date | null => {
   if (!birthDate || !isString(birthDate) || !isDate(birthDate)) {
-    throw getTypeError('incorrect or missing birthDate: ' + birthDate)
+    return null
   }
+
   return new Date(birthDate)
 }
 
-const parseBreed = (breed: unknown): string => {
+const parseBreed = (breed: unknown): string | null => {
   if (!breed || !isString(breed)) {
-    throw getTypeError('incorrect or missing breed')
+    return null
   }
 
   return breed
 }
 
-const parseSex = (sex: unknown): Sex => {
+const parseSex = (sex: unknown): Sex | null => {
   if (!sex || !isSex(sex)) {
-    throw getTypeError('incorrect or missing sex: ' + sex)
+    return null
   }
   return sex
 }
 
-const parseComments = (comments: unknown): string => {
+const parseComments = (comments: unknown): string | null => {
   if (!comments || !isString(comments)) {
-    throw getTypeError('incorrect or missing comments')
+    return null
   }
 
   return comments
 }
 
-const parseIsSpayedOrNeutered = (isSpayedOrNeutered: unknown): boolean => {
+const parseIsSpayedOrNeutered = (
+  isSpayedOrNeutered: unknown
+): boolean | null => {
   if (!isSpayedOrNeutered || !isBoolean(isSpayedOrNeutered)) {
-    throw getTypeError('incorrect or missing isSpayedOrNeutered')
+    return null
   }
 
   return isSpayedOrNeutered
 }
 
-const parseHeight = (height: unknown): number => {
+const parseHeight = (height: unknown): number | null => {
   if (!height || !isNumber(height)) {
-    throw getTypeError('incorrect or missing height')
+    return null
   }
 
   return height
 }
 
-const parseLength = (length: unknown): number => {
+const parseLength = (length: unknown): number | null => {
   if (!length || !isNumber(length)) {
-    throw getTypeError('incorrect or missing length')
+    return null
   }
 
   return length
 }
 
-const parseWeight = (weight: unknown): number => {
+const parseWeight = (weight: unknown): number | null => {
   if (!weight || !isNumber(weight)) {
-    throw getTypeError('incorrect or missing weight')
+    return null
   }
 
   return weight
 }
 
-const parseIsCatFriendly = (isCatFriendly: unknown): boolean => {
-  if (!isCatFriendly || !isBoolean(isCatFriendly)) {
-    throw getTypeError('incorrect or missing isCatFriendly')
+const parseIsCatFriendly = (isCatFriendly: unknown): boolean | null => {
+  if (!isBoolean(isCatFriendly)) {
+    return null
   }
 
   return isCatFriendly
 }
 
-const parseSize = (size: unknown): Size => {
+const parseSize = (size: unknown): Size | null => {
   if (!size || !isSize(size)) {
-    throw getTypeError('incorrect or missing size: ' + size)
+    return null
   }
   return size
 }
 
-const parseYoutubeUrl = (youtubeUrl: unknown): string => {
+const parseYoutubeUrl = (youtubeUrl: unknown): string | null => {
   if (!youtubeUrl || !isString(youtubeUrl)) {
-    throw getTypeError('incorrect or missing youtubeUrl')
+    return null
   }
 
   return youtubeUrl

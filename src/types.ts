@@ -16,18 +16,18 @@ export interface Dog {
   id: string
   dateAdded: Date
   name: string
-  kennel: string
-  birthDate: Date
-  breed: string
-  sex: Sex
-  comments: string
-  isSpayedOrNeutered: boolean
-  height: number
-  length: number
-  weight: number
-  isCatFriendly: boolean
-  size: Size
-  youtubeUrl: string
+  kennel: string | null
+  birthDate: Date | null
+  breed: string | null
+  sex: Sex | null
+  comments: string | null
+  isSpayedOrNeutered: boolean | null
+  height: number | null
+  length: number | null
+  weight: number | null
+  isCatFriendly: boolean | null
+  size: Size | null
+  youtubeUrl: string | null
 }
 
 export type NewDog = Omit<Dog, 'id' | 'dateAdded'>

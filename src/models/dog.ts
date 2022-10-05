@@ -2,7 +2,10 @@ import mongoose from 'mongoose'
 
 const dogSchema = new mongoose.Schema({
   dateAdded: Date,
-  name: String,
+  name: {
+    type: String,
+    unique: true,
+  },
   kennel: String,
   birthDate: Date,
   breed: String,
