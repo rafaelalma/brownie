@@ -45,9 +45,9 @@ const addDog = async (body: NewDog) => {
     youtubeUrl,
   })
 
-  const newDog = (await dog.save()) as Dog
+  const addedDog = (await dog.save()) as Dog
 
-  return newDog
+  return addedDog
 }
 
 const deleteDog = async (id: string) => {

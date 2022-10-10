@@ -2,8 +2,10 @@ import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
   username: String,
-  name: String,
   passwordHash: String,
+  name: String,
+  email: String,
+  roles: [String],
 })
 
 userSchema.set('toJSON', {
@@ -11,7 +13,8 @@ userSchema.set('toJSON', {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
-    delete returnedObject._v
+    delete returnedObject.__v
+    delete returnedObject.passwordHash
   },
 })
 

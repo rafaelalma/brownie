@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 
+import userRouter from './routes/userRouter'
 import dogRouter from './routes/dogRouter'
 import logger from './utils/logger'
 import config from './utils/config'
@@ -38,6 +39,8 @@ app.use(cors())
 app.use(express.json())
 
 app.use(middleware.requestLogger)
+
+app.use('/api/users', userRouter)
 
 app.use('/api/dogs', dogRouter)
 
