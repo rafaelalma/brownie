@@ -67,7 +67,7 @@ const parseRoles = (roles: unknown): Role[] => {
   return [...new Set(roles)]
 }
 
-const toNewUser = ({
+const validateUser = ({
   username,
   password,
   name,
@@ -87,4 +87,4 @@ const toNewUser = ({
   return newUser
 }
 
-export default toNewUser
+export default validateUser
