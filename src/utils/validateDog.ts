@@ -119,7 +119,7 @@ const parseYoutubeUrl = (youtubeUrl: unknown): string | null => {
   return youtubeUrl
 }
 
-const toNewDog = ({
+const validateDog = ({
   name,
   kennel,
   birthDate,
@@ -153,4 +153,4 @@ const toNewDog = ({
   return newDog
 }
 
-export default toNewDog
+export default validateDog

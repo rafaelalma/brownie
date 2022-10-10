@@ -2,8 +2,8 @@
 import express from 'express'
 
 import dogService from '../services/dogService'
-import { Dog, DogFields } from '../types/dog'
-import toNewDog from '../utils/toNewDog'
+import { DogFields } from '../types/dog'
+import validateDog from '../utils/validateDog'
 import DogModel from '../models/dogModel'
 
 const router = express.Router()
@@ -35,16 +35,16 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const newDog = toNewDog(req.body as DogFields)
+    const validDog = validateDog(req.body as DogFields)
 
-    const { name } = newDog
+    const { name } = validDog
 
     const existingDog = await DogModel.findOne({ name })
     if (existingDog) {
       return res.status(400).json({ error: 'dog name must be unique' })
     }
 
-    const addedDog = await dogService.addDog(newDog)
+    const addedDog = await dogService.addDog(validDog)
     return res.status(201).json(addedDog)
   } catch (error) {
     return next(error)
@@ -64,10 +64,18 @@ router.delete('/:id', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   const id = req.params.id
-  const body = req.body as Dog
 
   try {
-    const updatedDog = await dogService.updateDog(id, body)
+    const validDog = validateDog(req.body as DogFields)
+
+    const { name } = validDog
+
+    const existingDog = await DogModel.findOne({ name })
+    if (existingDog && existingDog.id !== id) {
+      return res.status(400).json({ error: 'dog name must be unique' })
+    }
+
+    const updatedDog = await dogService.updateDog(id, validDog)
     return res.json(updatedDog)
   } catch (error) {
     return next(error)
