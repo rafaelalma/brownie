@@ -8,6 +8,15 @@ import UserModel from '../models/userModel'
 
 const router = express.Router()
 
+router.get('/', async (_req, res, next) => {
+  try {
+    const users = await userService.getUsers()
+    return res.json(users)
+  } catch (error) {
+    return next(error)
+  }
+})
+
 router.post('/', async (req, res, next) => {
   try {
     const newUser = toNewUser(req.body as UserFields)

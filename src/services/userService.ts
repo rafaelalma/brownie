@@ -1,9 +1,14 @@
 import bcrypt from 'bcrypt'
 
 import UserModel from '../models/userModel'
-import { NewUser, AddedUser } from '../types/user'
+import { NewUser, AddedUser, User } from '../types/user'
 
 const SALT_ROUNDS = 10
+
+const getUsers = async () => {
+  const users: User[] = await UserModel.find({})
+  return users
+}
 
 const addUser = async (body: NewUser) => {
   const { username, password, name, email, roles } = body
@@ -24,5 +29,6 @@ const addUser = async (body: NewUser) => {
 }
 
 export default {
+  getUsers,
   addUser,
 }
