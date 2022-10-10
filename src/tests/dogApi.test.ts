@@ -2,8 +2,8 @@ import mongoose from 'mongoose'
 import supertest from 'supertest'
 
 import app from '../app'
-import DogModel from '../models/dog'
-import { Dog, NewDog, Sex, Size } from '../types'
+import DogModel from '../models/dogModel'
+import { Dog, NewDog, Sex, Size } from '../types/dog'
 import helper from './testHelper'
 
 const api = supertest(app)

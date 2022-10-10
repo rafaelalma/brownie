@@ -2,7 +2,7 @@
 import express from 'express'
 
 import dogService from '../services/dogService'
-import { Dog, DogFields } from '../types'
+import { Dog, DogFields } from '../types/dog'
 import toNewDog from '../utils/toNewDog'
 
 const router = express.Router()

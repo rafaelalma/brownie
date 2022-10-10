@@ -1,5 +1,5 @@
-import DogModel from '../models/dog'
-import { NewDog, Sex, Size } from '../types'
+import DogModel from '../models/dogModel'
+import { NewDog, Sex, Size } from '../types/dog'
 
 const initialDogs: NewDog[] = [
   {

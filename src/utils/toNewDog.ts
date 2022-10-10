@@ -1,20 +1,5 @@
-import { DogFields, NewDog, Sex, Size } from '../types'
-
-const isString = (text: unknown): text is string => {
-  return typeof text === 'string' || text instanceof String
-}
-
-const isBoolean = (value: unknown): value is boolean => {
-  return typeof value === 'boolean' || value instanceof Boolean
-}
-
-const isNumber = (value: unknown): value is number => {
-  return typeof value === 'number' || value instanceof Number
-}
-
-const isDate = (date: string): boolean => {
-  return Boolean(Date.parse(date))
-}
+import { isString, isBoolean, isNumber, isDate } from './typeCheck'
+import { DogFields, NewDog, Sex, Size } from '../types/dog'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isSex = (param: any): param is Sex => {
