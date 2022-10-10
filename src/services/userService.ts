@@ -16,6 +16,8 @@ const addUser = async (body: NewUser) => {
   const passwordHash: string = await bcrypt.hash(password, SALT_ROUNDS)
 
   const user = new UserModel({
+    createTime: new Date(),
+    updateTime: null,
     username,
     passwordHash,
     name,

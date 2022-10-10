@@ -8,6 +8,8 @@ export enum Role {
 
 export interface User {
   id: string
+  createTime: Date
+  updateTime: Date
   username: string
   password: string
   name: string | null
@@ -16,7 +18,7 @@ export interface User {
   roles: Role[]
 }
 
-export type NewUser = Omit<User, 'id'>
+export type NewUser = Omit<User, 'id' | 'createTime' | 'updateTime'>
 
 export type AddedUser = Omit<User, 'password'>
 
