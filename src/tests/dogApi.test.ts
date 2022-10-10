@@ -98,7 +98,25 @@ describe('addition of a new dog', () => {
     expect(names).toContain('Dog 3')
   })
 
-  test('fails with status code 400 if data is invalid', async () => {
+  test('succeeds with only dog name', async () => {
+    const newDog: Pick<NewDog, 'name'> = {
+      name: 'Dog 4',
+    }
+
+    await api
+      .post('/api/dogs')
+      .send(newDog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    const dogsAtEnd = await helper.dogsInDb()
+    expect(dogsAtEnd).toHaveLength(helper.initialDogs.length + 1)
+
+    const names = dogsAtEnd.map((dog) => dog.name)
+    expect(names).toContain('Dog 4')
+  })
+
+  test('fails with status code 400 if dog has no name', async () => {
     const newDog: NewDog = {
       name: '',
       kennel: 'D4',
@@ -115,7 +133,40 @@ describe('addition of a new dog', () => {
       youtubeUrl: 'sin url',
     }
 
-    await api.post('/api/dogs').send(newDog).expect(400)
+    const result = await api
+      .post('/api/dogs')
+      .send(newDog)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+
+    expect(result.body.error).toContain('incorrect or missing name')
+
+    const dogsAtEnd = await helper.dogsInDb()
+    expect(dogsAtEnd).toHaveLength(helper.initialDogs.length)
+  })
+
+  test('fails with status code 400 if dog name is already taken', async () => {
+    const newDog = {
+      name: 'Dog 1',
+      breed: 'Podenco',
+      sex: Sex.Male,
+      comments: '',
+      isSpayedOrNeutered: null,
+      height: null,
+      length: null,
+      weight: null,
+      isCatFriendly: false,
+      size: Size.Medium,
+      youtubeUrl: '',
+    }
+
+    const result = await api
+      .post('/api/dogs')
+      .send(newDog)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+
+    expect(result.body.error).toContain('dog name must be unique')
 
     const dogsAtEnd = await helper.dogsInDb()
     expect(dogsAtEnd).toHaveLength(helper.initialDogs.length)

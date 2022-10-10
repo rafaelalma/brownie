@@ -4,6 +4,7 @@ import express from 'express'
 import dogService from '../services/dogService'
 import { Dog, DogFields } from '../types/dog'
 import toNewDog from '../utils/toNewDog'
+import DogModel from '../models/dogModel'
 
 const router = express.Router()
 
@@ -38,8 +39,9 @@ router.post('/', async (req, res, next) => {
 
     const { name } = newDog
 
-    if (!name) {
-      return res.status(400).json({ error: 'dog must have a name' })
+    const existingDog = await DogModel.findOne({ name })
+    if (existingDog) {
+      return res.status(400).json({ error: 'dog name must be unique' })
     }
 
     const addedDog = await dogService.addDog(newDog)
