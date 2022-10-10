@@ -11,7 +11,7 @@ const getUsers = async () => {
 }
 
 const addUser = async (body: NewUser) => {
-  const { username, password, name, email, roles } = body
+  const { username, password, name, phone, email, roles } = body
 
   const passwordHash: string = await bcrypt.hash(password, SALT_ROUNDS)
 
@@ -19,6 +19,7 @@ const addUser = async (body: NewUser) => {
     username,
     passwordHash,
     name,
+    phone,
     email,
     roles,
   })

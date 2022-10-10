@@ -43,6 +43,14 @@ const parseName = (name: unknown): string | null => {
   return name
 }
 
+const parsePhone = (phone: unknown): string | null => {
+  if (!phone || !isString(phone)) {
+    return null
+  }
+
+  return phone
+}
+
 const parseEmail = (email: unknown): string | null => {
   if (!email || !isString(email)) {
     return null
@@ -63,6 +71,7 @@ const toNewUser = ({
   username,
   password,
   name,
+  phone,
   email,
   roles,
 }: UserFields): NewUser => {
@@ -70,6 +79,7 @@ const toNewUser = ({
     username: parseUsername(username),
     password: parsePassword(password),
     name: parseName(name),
+    phone: parsePhone(phone),
     email: parseEmail(email),
     roles: parseRoles(roles),
   }

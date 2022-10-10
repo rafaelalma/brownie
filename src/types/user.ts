@@ -11,6 +11,7 @@ export interface User {
   username: string
   password: string
   name: string | null
+  phone: string | null
   email: string | null
   roles: Role[]
 }
@@ -23,6 +24,7 @@ export type UserFields = {
   username: unknown
   password: unknown
   name: unknown
+  phone: unknown
   email: unknown
   roles: unknown[]
 }
