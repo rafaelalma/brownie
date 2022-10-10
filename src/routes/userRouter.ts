@@ -4,6 +4,7 @@ import express from 'express'
 import userService from '../services/userService'
 import { UserFields } from '../types/user'
 import toNewUser from '../utils/toNewUser'
+import UserModel from '../models/userModel'
 
 const router = express.Router()
 
@@ -11,13 +12,11 @@ router.post('/', async (req, res, next) => {
   try {
     const newUser = toNewUser(req.body as UserFields)
 
-    const { username, password } = newUser
+    const { username } = newUser
 
-    if (!username) {
-      return res.status(400).json({ error: 'user must have an username' })
-    }
-    if (!password) {
-      return res.status(400).json({ error: 'user must have a password' })
+    const existingUser = await UserModel.findOne({ username })
+    if (existingUser) {
+      return res.status(400).json({ error: 'username must be unique' })
     }
 
     const addedUser = await userService.addUser(newUser)

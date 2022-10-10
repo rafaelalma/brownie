@@ -1,4 +1,5 @@
 import DogModel from '../models/dogModel'
+import UserModel from '../models/userModel'
 import { NewDog, Sex, Size } from '../types/dog'
 
 const initialDogs: NewDog[] = [
@@ -34,6 +35,11 @@ const initialDogs: NewDog[] = [
   },
 ]
 
+const usersInDb = async () => {
+  const users = await UserModel.find({})
+  return users.map((user) => user.toJSON())
+}
+
 const dogsInDb = async () => {
   const dogs = await DogModel.find({})
   return dogs.map((dog) => dog.toJSON())
@@ -49,6 +55,7 @@ const nonExistingId = async () => {
 
 export default {
   initialDogs,
+  usersInDb,
   dogsInDb,
   nonExistingId,
 }
