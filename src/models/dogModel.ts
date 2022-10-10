@@ -1,7 +1,8 @@
 import mongoose from 'mongoose'
 
 const dogSchema = new mongoose.Schema({
-  dateAdded: Date,
+  createTime: Date,
+  updateTime: Date,
   name: String,
   kennel: String,
   birthDate: Date,

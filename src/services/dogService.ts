@@ -29,7 +29,8 @@ const addDog = async (body: NewDog) => {
   } = body
 
   const dog = new DogModel({
-    dateAdded: new Date(),
+    createTime: new Date(),
+    updateTime: null,
     name,
     kennel,
     birthDate,
@@ -72,6 +73,7 @@ const updateDog = async (id: string, body: NewDog) => {
   } = body
 
   const dog = {
+    updateTime: new Date(),
     name,
     kennel,
     birthDate,

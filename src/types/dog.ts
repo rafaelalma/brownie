@@ -14,7 +14,8 @@ export enum Sex {
 
 export interface Dog {
   id: string
-  dateAdded: Date
+  createTime: Date
+  updateTime: Date | null
   name: string
   kennel: string | null
   birthDate: Date | null
@@ -30,7 +31,7 @@ export interface Dog {
   youtubeUrl: string | null
 }
 
-export type NewDog = Omit<Dog, 'id' | 'dateAdded'>
+export type NewDog = Omit<Dog, 'id' | 'createTime' | 'updateTime'>
 
 export type DogFields = {
   name: unknown
