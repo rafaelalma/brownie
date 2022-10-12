@@ -1,6 +1,41 @@
-import { RequestHandler, ErrorRequestHandler } from 'express'
+import { RequestHandler, ErrorRequestHandler, Request } from 'express'
+import jsonwebtoken from 'jsonwebtoken'
 
 import logger from './logger'
+
+const getTokenFrom = (req: Request) => {
+  const authorization = req.get('authorization')
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    return authorization.substring(7)
+  }
+
+  return null
+}
+
+const tokenExtractor: RequestHandler = (req, res, next) => {
+  const token = getTokenFrom(req)
+  if (!token) {
+    return res.status(401).json({ error: 'token missing' })
+  }
+  req.token = token
+
+  return next()
+}
+
+const tokenVerifier: RequestHandler = (req, res, next) => {
+  if (!process.env.SECRET) {
+    throw new Error('no secret')
+  }
+  if (!req.token) {
+    throw new Error('no token')
+  }
+  const decodedToken = jsonwebtoken.verify(req.token, process.env.SECRET)
+  if (!decodedToken) {
+    return res.status(401).json({ error: 'token invalid' })
+  }
+
+  return next()
+}
 
 const requestLogger: RequestHandler = (req, _res, next) => {
   logger.info('Method:', req.method)
@@ -8,7 +43,8 @@ const requestLogger: RequestHandler = (req, _res, next) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   logger.info('Body:  ', req.body)
   logger.info('---')
-  next()
+
+  return next()
 }
 
 const unknownEndpoint: RequestHandler = (_req, res) => {
@@ -25,6 +61,10 @@ const errorHandler: ErrorRequestHandler = (error: unknown, _req, res, next) => {
       return res.status(400).send({ error: error.message })
     } else if (error.name === 'TypeError') {
       return res.status(400).send({ error: error.message })
+    } else if (error.name === 'JsonWebTokenError') {
+      return res.status(401).json({ error: 'invalid token' })
+    } else if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({ error: 'expired token' })
     } else if (error.name === 'MongoServerError') {
       return res.status(500).send({ error: error.message })
     } else {
@@ -36,6 +76,8 @@ const errorHandler: ErrorRequestHandler = (error: unknown, _req, res, next) => {
 }
 
 export default {
+  tokenExtractor,
+  tokenVerifier,
   requestLogger,
   unknownEndpoint,
   errorHandler,
