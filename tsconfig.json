@@ -9,6 +9,6 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
-    "typeRoots": ["./types"]
+    "typeRoots": ["./types", "./node_modules/@types"]
   }
 }
