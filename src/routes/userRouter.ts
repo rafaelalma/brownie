@@ -2,7 +2,7 @@
 import express from 'express'
 
 import userService from '../services/userService'
-import { UserFields } from '../types/user'
+import { UserFields } from '../types/userType'
 import validateUser from '../utils/validateUser'
 import UserModel from '../models/userModel'
 import middleware from '../utils/middleware'

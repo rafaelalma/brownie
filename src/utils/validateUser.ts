@@ -1,5 +1,5 @@
 import { isArray, isString } from './typeCheck'
-import { UserFields, NewUser, Role } from '../types/user'
+import { UserFields, NewUser, Role } from '../types/userType'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isRole = (param: any): param is Role => {

@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 
 import UserModel from '../models/userModel'
-import { NewUser, AddedUser, User } from '../types/user'
+import { NewUser, AddedUser, User } from '../types/userType'
 
 const SALT_ROUNDS = 10
 

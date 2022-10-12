@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt'
 
 import UserModel from '../models/userModel'
 import validateUser from '../utils/validateUser'
-import { UserFields } from '../types/user'
+import { UserFields } from '../types/userType'
 
 const router = express.Router()
 

@@ -3,7 +3,7 @@ import supertest from 'supertest'
 
 import app from '../app'
 import DogModel from '../models/dogModel'
-import { Dog, NewDog, Sex, Size } from '../types/dog'
+import { Dog, NewDog, Sex, Size } from '../types/dogType'
 import helper from './testHelper'
 
 const api = supertest(app)

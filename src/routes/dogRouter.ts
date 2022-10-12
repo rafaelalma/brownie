@@ -2,7 +2,7 @@
 import express from 'express'
 
 import dogService from '../services/dogService'
-import { DogFields } from '../types/dog'
+import { DogFields } from '../types/dogType'
 import validateDog from '../utils/validateDog'
 import DogModel from '../models/dogModel'
 import middleware from '../utils/middleware'

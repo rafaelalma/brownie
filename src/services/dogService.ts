@@ -1,5 +1,5 @@
 import DogModel from '../models/dogModel'
-import { Dog, NewDog } from '../types/dog'
+import { Dog, NewDog } from '../types/dogType'
 
 const getDogs = async () => {
   const dogs: Dog[] = await DogModel.find({})

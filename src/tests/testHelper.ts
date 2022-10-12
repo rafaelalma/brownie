@@ -1,6 +1,6 @@
 import DogModel from '../models/dogModel'
 import UserModel from '../models/userModel'
-import { NewDog, Sex, Size } from '../types/dog'
+import { NewDog, Sex, Size } from '../types/dogType'
 
 const initialDogs: NewDog[] = [
   {

@@ -1,5 +1,5 @@
 import { isString, isBoolean, isNumber, isDate } from './typeCheck'
-import { DogFields, NewDog, Sex, Size } from '../types/dog'
+import { DogFields, NewDog, Sex, Size } from '../types/dogType'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isSex = (param: any): param is Sex => {
