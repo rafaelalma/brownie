@@ -6,38 +6,52 @@ import { DogFields } from '../types/dogType'
 import validateDog from '../utils/validateDog'
 import DogModel from '../models/dogModel'
 import middleware from '../utils/middleware'
+import { RequestCustom } from '../types/expressType'
 
 const router = express.Router()
 
-router.get('/', async (_req, res, next) => {
-  try {
-    const dogs = await dogService.getDogs()
-    return res.json(dogs)
-  } catch (error) {
-    return next(error)
-  }
-})
-
-router.get('/:id', async (req, res, next) => {
-  const id = req.params.id
-
-  try {
-    const dog = await dogService.getDog(id)
-
-    if (dog) {
-      return res.json(dog)
-    } else {
-      return res.status(404).end()
+router.get(
+  '/',
+  middleware.tokenExtractor,
+  middleware.tokenVerifier,
+  middleware.userExtractor,
+  async (_req: RequestCustom, res, next) => {
+    try {
+      const dogs = await dogService.getDogs()
+      return res.json(dogs)
+    } catch (error) {
+      return next(error)
     }
-  } catch (error) {
-    return next(error)
   }
-})
+)
+
+router.get(
+  '/:id',
+  middleware.tokenExtractor,
+  middleware.tokenVerifier,
+  middleware.userExtractor,
+  async (req, res, next) => {
+    const id = req.params.id
+
+    try {
+      const dog = await dogService.getDog(id)
+
+      if (dog) {
+        return res.json(dog)
+      } else {
+        return res.status(404).end()
+      }
+    } catch (error) {
+      return next(error)
+    }
+  }
+)
 
 router.post(
   '/',
   middleware.tokenExtractor,
   middleware.tokenVerifier,
+  middleware.userExtractor,
   async (req, res, next) => {
     try {
       const validDog = validateDog(req.body as DogFields)
@@ -61,6 +75,7 @@ router.delete(
   '/:id',
   middleware.tokenExtractor,
   middleware.tokenVerifier,
+  middleware.userExtractor,
   async (req, res, next) => {
     const id = req.params.id
 
@@ -77,6 +92,7 @@ router.put(
   '/:id',
   middleware.tokenExtractor,
   middleware.tokenVerifier,
+  middleware.userExtractor,
   async (req, res, next) => {
     const id = req.params.id
 
