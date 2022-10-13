@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
   name: String,
   phone: String,
   email: String,
-  roles: [String],
+  roles: [Number],
 })
 
 userSchema.set('toJSON', {
