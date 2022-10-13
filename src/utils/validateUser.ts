@@ -60,7 +60,12 @@ const parseEmail = (email: unknown): string | null => {
 }
 
 const parseRoles = (roles: unknown): Role[] => {
-  if (!roles || !isArray(roles) || !isArrayOfRoles(roles)) {
+  if (
+    !roles ||
+    !isArray(roles) ||
+    !(roles.length > 0) ||
+    !isArrayOfRoles(roles)
+  ) {
     return [Role.User]
   }
 
