@@ -26,10 +26,10 @@ const requestLogger = (
   _res: Response,
   next: NextFunction
 ) => {
+  logger.info('\n')
   logger.info('Method:', req.method)
   logger.info('Path:  ', req.path)
   logger.info('Body:  ', req.body)
-  logger.info('\n')
 
   return next()
 }
@@ -100,7 +100,78 @@ const userLogger = (req: RequestCustom, _res: Response, next: NextFunction) => {
   }
 
   logger.info(req.user)
-  logger.info('\n')
+
+  return next()
+}
+
+const volunteerVerifier = (
+  req: RequestCustom,
+  res: Response,
+  next: NextFunction
+) => {
+  if (!req.user) {
+    throw new Error('no user')
+  }
+
+  if (!req.user.roles.some((role) => role >= Role.Volunteer)) {
+    const errorMessage = 'unauthorized role'
+    logger.error(errorMessage)
+    return res.status(401).json({ error: errorMessage })
+  }
+
+  return next()
+}
+
+const veteranVerifier = (
+  req: RequestCustom,
+  res: Response,
+  next: NextFunction
+) => {
+  if (!req.user) {
+    throw new Error('no user')
+  }
+
+  if (!req.user.roles.some((role) => role >= Role.Veteran)) {
+    const errorMessage = 'unauthorized role'
+    logger.error(`${errorMessage}\n`)
+    return res.status(401).json({ error: errorMessage })
+  }
+
+  return next()
+}
+
+const coordinatorVerifier = (
+  req: RequestCustom,
+  res: Response,
+  next: NextFunction
+) => {
+  if (!req.user) {
+    throw new Error('no user')
+  }
+
+  if (!req.user.roles.some((role) => role >= Role.Coordinator)) {
+    const errorMessage = 'unauthorized role'
+    logger.error(`${errorMessage}\n`)
+    return res.status(401).json({ error: errorMessage })
+  }
+
+  return next()
+}
+
+const administratorVerifier = (
+  req: RequestCustom,
+  res: Response,
+  next: NextFunction
+) => {
+  if (!req.user) {
+    throw new Error('no user')
+  }
+
+  if (!req.user.roles.some((role) => role >= Role.Administrator)) {
+    const errorMessage = 'unauthorized role'
+    logger.error(`${errorMessage}\n`)
+    return res.status(401).json({ error: errorMessage })
+  }
 
   return next()
 }
@@ -138,6 +209,10 @@ export default {
   tokenVerifier,
   userExtractor,
   userLogger,
+  volunteerVerifier,
+  veteranVerifier,
+  coordinatorVerifier,
+  administratorVerifier,
   requestLogger,
   unknownEndpoint,
   errorHandler,

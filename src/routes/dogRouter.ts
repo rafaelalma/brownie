@@ -6,6 +6,8 @@ import { DogFields } from '../types/dogType'
 import validateDog from '../utils/validateDog'
 import DogModel from '../models/dogModel'
 import { RequestCustom } from '../types/expressType'
+import middleware from '../utils/middleware'
+import logger from '../utils/logger'
 
 const router = express.Router()
 
@@ -34,7 +36,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', middleware.coordinatorVerifier, async (req, res, next) => {
   try {
     const validDog = validateDog(req.body as DogFields)
 
@@ -42,7 +44,9 @@ router.post('/', async (req, res, next) => {
 
     const existingDog = await DogModel.findOne({ name })
     if (existingDog) {
-      return res.status(400).json({ error: 'dog name must be unique' })
+      const errorMessage = 'dog name must be unique'
+      logger.error(errorMessage)
+      return res.status(400).json({ error: errorMessage })
     }
 
     const addedDog = await dogService.addDog(validDog)
@@ -52,18 +56,22 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.delete('/:id', async (req, res, next) => {
-  const id = req.params.id
+router.delete(
+  '/:id',
+  middleware.coordinatorVerifier,
+  async (req, res, next) => {
+    const id = req.params.id
 
-  try {
-    await dogService.deleteDog(id)
-    return res.status(204).end()
-  } catch (error) {
-    return next(error)
+    try {
+      await dogService.deleteDog(id)
+      return res.status(204).end()
+    } catch (error) {
+      return next(error)
+    }
   }
-})
+)
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', middleware.coordinatorVerifier, async (req, res, next) => {
   const id = req.params.id
 
   try {
@@ -73,7 +81,9 @@ router.put('/:id', async (req, res, next) => {
 
     const existingDog = await DogModel.findOne({ name })
     if (existingDog && existingDog.id !== id) {
-      return res.status(400).json({ error: 'dog name must be unique' })
+      const errorMessage = 'dog name must be unique'
+      logger.error(errorMessage)
+      return res.status(400).json({ error: errorMessage })
     }
 
     const updatedDog = await dogService.updateDog(id, validDog)

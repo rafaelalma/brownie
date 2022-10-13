@@ -49,6 +49,7 @@ app.use(
   middleware.tokenVerifier,
   middleware.userExtractor,
   middleware.userLogger,
+  middleware.coordinatorVerifier,
   userRouter
 )
 
@@ -58,6 +59,7 @@ app.use(
   middleware.tokenVerifier,
   middleware.userExtractor,
   middleware.userLogger,
+  middleware.volunteerVerifier,
   dogRouter
 )
 
