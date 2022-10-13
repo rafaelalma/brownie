@@ -41,11 +41,25 @@ app.use(express.json())
 
 app.use(middleware.requestLogger)
 
-app.use('/api/users', userRouter)
-
 app.use('/api/login', loginRouter)
 
-app.use('/api/dogs', dogRouter)
+app.use(
+  '/api/users',
+  middleware.tokenExtractor,
+  middleware.tokenVerifier,
+  middleware.userExtractor,
+  middleware.userLogger,
+  userRouter
+)
+
+app.use(
+  '/api/dogs',
+  middleware.tokenExtractor,
+  middleware.tokenVerifier,
+  middleware.userExtractor,
+  middleware.userLogger,
+  dogRouter
+)
 
 app.use(middleware.unknownEndpoint)
 
