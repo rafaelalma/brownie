@@ -21,6 +21,19 @@ const getTokenFrom = (req: Request) => {
   return null
 }
 
+const requestLogger = (
+  req: RequestCustom,
+  _res: Response,
+  next: NextFunction
+) => {
+  logger.info('Method:', req.method)
+  logger.info('Path:  ', req.path)
+  logger.info('Body:  ', req.body)
+  logger.info('\n')
+
+  return next()
+}
+
 const tokenExtractor = (
   req: RequestCustom,
   res: Response,
@@ -81,12 +94,13 @@ const userExtractor = async (
   return next()
 }
 
-const requestLogger: RequestHandler = (req, _res, next) => {
-  logger.info('Method:', req.method)
-  logger.info('Path:  ', req.path)
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  logger.info('Body:  ', req.body)
-  logger.info('---')
+const userLogger = (req: RequestCustom, _res: Response, next: NextFunction) => {
+  if (!req.user) {
+    throw new Error('no user')
+  }
+
+  logger.info(req.user)
+  logger.info('\n')
 
   return next()
 }
@@ -123,6 +137,7 @@ export default {
   tokenExtractor,
   tokenVerifier,
   userExtractor,
+  userLogger,
   requestLogger,
   unknownEndpoint,
   errorHandler,
