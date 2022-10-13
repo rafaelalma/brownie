@@ -37,7 +37,7 @@ router.post('/', async (req, res, next) => {
       throw new Error('no secret')
     }
     const token = jsonwebtoken.sign(userForToken, process.env.SECRET, {
-      expiresIn: 60 * 60,
+      expiresIn: 60 * 60 * 5,
     })
 
     return res.status(200).send({
