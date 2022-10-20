@@ -5,13 +5,12 @@ import dogService from '../services/dogService'
 import { DogFields } from '../types/dogType'
 import validateDog from '../utils/validateDog'
 import DogModel from '../models/dogModel'
-import { RequestCustom } from '../types/expressType'
 import middleware from '../utils/middleware'
 import logger from '../utils/logger'
 
 const router = express.Router()
 
-router.get('/', async (_req: RequestCustom, res, next) => {
+router.get('/', async (_req, res, next) => {
   try {
     const dogs = await dogService.getDogs()
     return res.json(dogs)
