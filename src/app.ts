@@ -5,9 +5,10 @@ import cors from 'cors'
 import userRouter from './routes/userRouter'
 import loginRouter from './routes/loginRouter'
 import dogRouter from './routes/dogRouter'
-import logger from './utils/logger'
-import config from './utils/config'
+import treatmentRouter from './routes/treatmentRouter'
 import middleware from './utils/middleware'
+import config from './utils/config'
+import logger from './utils/logger'
 
 const app = express()
 
@@ -61,6 +62,16 @@ app.use(
   middleware.userLogger,
   middleware.volunteerVerifier,
   dogRouter
+)
+
+app.use(
+  '/api/treatments',
+  middleware.tokenExtractor,
+  middleware.tokenVerifier,
+  middleware.userExtractor,
+  middleware.userLogger,
+  middleware.volunteerVerifier,
+  treatmentRouter
 )
 
 app.use(middleware.unknownEndpoint)
