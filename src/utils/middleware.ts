@@ -189,8 +189,6 @@ const unknownEndpoint: RequestHandler = (_req, res) => {
 
 const errorHandler: ErrorRequestHandler = (error: unknown, _req, res, next) => {
   if (error instanceof Error) {
-    logger.error(error.message)
-
     if (error.name === 'CastError') {
       logger.error(MALFORMATTED_ID_ERROR_MESSAGE)
       return res.status(400).send({ error: MALFORMATTED_ID_ERROR_MESSAGE })

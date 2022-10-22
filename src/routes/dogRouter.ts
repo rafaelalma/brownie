@@ -2,9 +2,11 @@
 import express from 'express'
 
 import dogService from '../services/dogService'
-import { DogFields } from '../types/dogType'
+import { DogFields, DogQueryFields } from '../types/dogType'
 import validateDog from '../utils/validateDog'
+import validateDogQuery from '../utils/validateDogQuery'
 import DogModel from '../models/dogModel'
+import dogUtils from '../utils/dogUtils'
 import middleware from '../utils/middleware'
 import logger from '../utils/logger'
 import {
@@ -14,10 +16,21 @@ import {
 
 const router = express.Router()
 
-router.get('/', async (_req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const dogs = await dogService.getDogs()
-    return res.json(dogs)
+
+    const query = validateDogQuery(req.query as DogQueryFields)
+
+    logger.info(query)
+
+    const sortedDogs = dogUtils.dogSorter(
+      dogs,
+      query.sortField,
+      query.sortOrder
+    )
+
+    return res.json(sortedDogs)
   } catch (error) {
     return next(error)
   }

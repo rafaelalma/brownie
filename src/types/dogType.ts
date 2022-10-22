@@ -1,3 +1,5 @@
+import { SortOrder } from './utilType'
+
 export enum Size {
   VeryBig = 'very big',
   Big = 'big',
@@ -48,3 +50,20 @@ export type DogFields = {
   size: unknown
   youtubeUrl: unknown
 }
+
+export enum DogSortField {
+  CreateTime = 'createTime',
+  UpdateTime = 'updateTime',
+  Name = 'name',
+  BirthDate = 'birthDate',
+  Height = 'height',
+  Length = 'length',
+  Weight = 'weight',
+}
+
+export type DogQuery = {
+  sortField?: DogSortField
+  sortOrder?: SortOrder
+}
+
+export type DogQueryFields = { sortField: unknown; sortOrder: unknown }
