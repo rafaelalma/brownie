@@ -5,6 +5,8 @@ import treatmentService from '../services/treatmentService'
 import { TreatmentFields } from '../types/treatmentType'
 import validateTreatment from '../utils/validateTreatment'
 import middleware from '../utils/middleware'
+import logger from '../utils/logger'
+import { MISSING_TREATMENT_ERROR_MESSAGE } from '../constants/errorMessages'
 
 const router = express.Router()
 
@@ -26,7 +28,8 @@ router.get('/:id', async (req, res, next) => {
     if (treatment) {
       return res.json(treatment)
     } else {
-      return res.status(404).end()
+      logger.error(MISSING_TREATMENT_ERROR_MESSAGE)
+      return res.status(404).json({ error: MISSING_TREATMENT_ERROR_MESSAGE })
     }
   } catch (error) {
     return next(error)

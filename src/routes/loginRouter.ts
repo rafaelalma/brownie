@@ -7,6 +7,7 @@ import UserModel from '../models/userModel'
 import validateUser from '../utils/validateUser'
 import { UserFields } from '../types/userType'
 import logger from '../utils/logger'
+import { INVALID_USERNAME_PASSWORD_ERROR_MESSAGE } from '../constants/errorMessages'
 
 const router = express.Router()
 
@@ -23,9 +24,10 @@ router.post('/', async (req, res, next) => {
         : await bcrypt.compare(password, user.passwordHash)
 
     if (!(user && passwordCorrect)) {
-      const errorMesage = 'invalid username or password'
-      logger.error(errorMesage)
-      return res.status(401).json({ error: errorMesage })
+      logger.error(INVALID_USERNAME_PASSWORD_ERROR_MESSAGE)
+      return res
+        .status(401)
+        .json({ error: INVALID_USERNAME_PASSWORD_ERROR_MESSAGE })
     }
 
     const userForToken = {

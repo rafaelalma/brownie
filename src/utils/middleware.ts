@@ -11,6 +11,14 @@ import logger from './logger'
 import UserModel from '../models/userModel'
 import { RequestCustom } from '../types/expressType'
 import { Role } from '../types/userType'
+import {
+  EXPIRED_TOKEN_ERROR_MESSAGE,
+  INVALID_TOKEN_ERROR_MESSAGE,
+  MALFORMATTED_ID_ERROR_MESSAGE,
+  MISSING_TOKEN_ERROR_MESSAGE,
+  UNAUTHORIZED_ROLE_ERROR_MESSAGE,
+  UNKNOWN_ENDPOINT_ERROR_MESSAGE,
+} from '../constants/errorMessages'
 
 const getTokenFrom = (req: Request) => {
   const authorization = req.get('authorization')
@@ -41,7 +49,8 @@ const tokenExtractor = (
 ) => {
   const token = getTokenFrom(req)
   if (!token) {
-    return res.status(401).json({ error: 'token missing' })
+    logger.error(MISSING_TOKEN_ERROR_MESSAGE)
+    return res.status(401).json({ error: MISSING_TOKEN_ERROR_MESSAGE })
   }
   req.token = token
 
@@ -64,7 +73,8 @@ const tokenVerifier = (
     process.env.SECRET
   ) as JwtPayload
   if (!decodedToken) {
-    return res.status(401).json({ error: 'token invalid' })
+    logger.error(INVALID_TOKEN_ERROR_MESSAGE)
+    return res.status(401).json({ error: INVALID_TOKEN_ERROR_MESSAGE })
   }
 
   req.decodedToken = decodedToken
@@ -114,9 +124,8 @@ const volunteerVerifier = (
   }
 
   if (!req.user.roles.some((role) => role >= Role.Volunteer)) {
-    const errorMessage = 'unauthorized role'
-    logger.error(errorMessage)
-    return res.status(401).json({ error: errorMessage })
+    logger.error(UNAUTHORIZED_ROLE_ERROR_MESSAGE)
+    return res.status(401).json({ error: UNAUTHORIZED_ROLE_ERROR_MESSAGE })
   }
 
   return next()
@@ -132,9 +141,8 @@ const veteranVerifier = (
   }
 
   if (!req.user.roles.some((role) => role >= Role.Veteran)) {
-    const errorMessage = 'unauthorized role'
-    logger.error(`${errorMessage}\n`)
-    return res.status(401).json({ error: errorMessage })
+    logger.error(UNAUTHORIZED_ROLE_ERROR_MESSAGE)
+    return res.status(401).json({ error: UNAUTHORIZED_ROLE_ERROR_MESSAGE })
   }
 
   return next()
@@ -150,9 +158,8 @@ const coordinatorVerifier = (
   }
 
   if (!req.user.roles.some((role) => role >= Role.Coordinator)) {
-    const errorMessage = 'unauthorized role'
-    logger.error(`${errorMessage}\n`)
-    return res.status(401).json({ error: errorMessage })
+    logger.error(UNAUTHORIZED_ROLE_ERROR_MESSAGE)
+    return res.status(401).json({ error: UNAUTHORIZED_ROLE_ERROR_MESSAGE })
   }
 
   return next()
@@ -168,16 +175,16 @@ const administratorVerifier = (
   }
 
   if (!req.user.roles.some((role) => role >= Role.Administrator)) {
-    const errorMessage = 'unauthorized role'
-    logger.error(`${errorMessage}\n`)
-    return res.status(401).json({ error: errorMessage })
+    logger.error(UNAUTHORIZED_ROLE_ERROR_MESSAGE)
+    return res.status(401).json({ error: UNAUTHORIZED_ROLE_ERROR_MESSAGE })
   }
 
   return next()
 }
 
 const unknownEndpoint: RequestHandler = (_req, res) => {
-  res.status(404).send({ error: 'unknown endpoint' })
+  logger.error(UNKNOWN_ENDPOINT_ERROR_MESSAGE)
+  res.status(404).send({ error: UNKNOWN_ENDPOINT_ERROR_MESSAGE })
 }
 
 const errorHandler: ErrorRequestHandler = (error: unknown, _req, res, next) => {
@@ -185,20 +192,28 @@ const errorHandler: ErrorRequestHandler = (error: unknown, _req, res, next) => {
     logger.error(error.message)
 
     if (error.name === 'CastError') {
-      return res.status(400).send({ error: 'malformatted id' })
+      logger.error(MALFORMATTED_ID_ERROR_MESSAGE)
+      return res.status(400).send({ error: MALFORMATTED_ID_ERROR_MESSAGE })
     } else if (error.name === 'ValidationError') {
+      logger.error(error.message)
       return res.status(400).send({ error: error.message })
     } else if (error.name === 'TypeError') {
+      logger.error(error.message)
       return res.status(400).send({ error: error.message })
     } else if (error.name === 'MissingDogError') {
+      logger.error(error.message)
       return res.status(400).send({ error: error.message })
     } else if (error.name === 'JsonWebTokenError') {
-      return res.status(401).json({ error: 'invalid token' })
+      logger.error(INVALID_TOKEN_ERROR_MESSAGE)
+      return res.status(401).json({ error: INVALID_TOKEN_ERROR_MESSAGE })
     } else if (error.name === 'TokenExpiredError') {
-      return res.status(401).json({ error: 'expired token' })
+      logger.error(EXPIRED_TOKEN_ERROR_MESSAGE)
+      return res.status(401).json({ error: EXPIRED_TOKEN_ERROR_MESSAGE })
     } else if (error.name === 'MongoServerError') {
+      logger.error(error.message)
       return res.status(500).send({ error: error.message })
     } else {
+      logger.error(error.message)
       return res.status(500).send({ error: error.message })
     }
   }

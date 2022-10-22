@@ -6,6 +6,7 @@ import { UserFields } from '../types/userType'
 import validateUser from '../utils/validateUser'
 import UserModel from '../models/userModel'
 import logger from '../utils/logger'
+import { UNIQUE_USERNAME_ERROR_MESSAGE } from '../constants/errorMessages'
 
 const router = express.Router()
 
@@ -26,9 +27,8 @@ router.post('/', async (req, res, next) => {
 
     const existingUser = await UserModel.findOne({ username })
     if (existingUser) {
-      const errorMesage = 'username must be unique'
-      logger.error(errorMesage)
-      return res.status(400).json({ error: errorMesage })
+      logger.error(UNIQUE_USERNAME_ERROR_MESSAGE)
+      return res.status(400).json({ error: UNIQUE_USERNAME_ERROR_MESSAGE })
     }
 
     const addedUser = await userService.addUser(validUser)
