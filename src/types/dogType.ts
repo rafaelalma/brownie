@@ -61,9 +61,19 @@ export enum DogSortField {
   Weight = 'weight',
 }
 
+export enum DogGroupField {
+  Kennel = 'kennel',
+  Breed = 'breed',
+}
+
 export type DogQuery = {
   sortField?: DogSortField
   sortOrder?: SortOrder
+  groupField?: DogGroupField
 }
 
-export type DogQueryFields = { sortField: unknown; sortOrder: unknown }
+export type DogQueryFields = {
+  sortField: unknown
+  sortOrder: unknown
+  groupField: unknown
+}

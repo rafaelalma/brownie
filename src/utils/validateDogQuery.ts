@@ -1,4 +1,9 @@
-import { DogQuery, DogQueryFields, DogSortField } from '../types/dogType'
+import {
+  DogGroupField,
+  DogQuery,
+  DogQueryFields,
+  DogSortField,
+} from '../types/dogType'
 import { SortOrder } from '../types/utilType'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -11,6 +16,12 @@ const isDogSortField = (param: any): param is DogSortField => {
 const isSortOrder = (param: any): param is SortOrder => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   return Object.values(SortOrder).includes(param)
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const isGroupField = (param: any): param is DogGroupField => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  return Object.values(DogGroupField).includes(param)
 }
 
 const parseSortField = (sortField: unknown): DogSortField | undefined => {
@@ -27,13 +38,22 @@ const parseSortOrder = (sortOrder: unknown): SortOrder | undefined => {
   return sortOrder
 }
 
+const parseGroupField = (groupField: unknown): DogGroupField | undefined => {
+  if (!groupField || !isGroupField(groupField)) {
+    return undefined
+  }
+  return groupField
+}
+
 const validateDogQuery = ({
   sortField,
   sortOrder,
+  groupField,
 }: DogQueryFields): DogQuery => {
   const dogQuery: DogQuery = {
     sortField: parseSortField(sortField),
     sortOrder: parseSortOrder(sortOrder),
+    groupField: parseGroupField(groupField),
   }
 
   return dogQuery
