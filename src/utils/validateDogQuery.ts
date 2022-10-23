@@ -5,6 +5,7 @@ import {
   DogSortField,
 } from '../types/dogType'
 import { SortOrder } from '../types/utilType'
+import { isString } from './typeCheck'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isDogSortField = (param: any): param is DogSortField => {
@@ -45,15 +46,24 @@ const parseGroupField = (groupField: unknown): DogGroupField | undefined => {
   return groupField
 }
 
+const parseSearchField = (searchField: unknown): string => {
+  if (!searchField || !isString(searchField)) {
+    return ''
+  }
+  return searchField
+}
+
 const validateDogQuery = ({
   sortField,
   sortOrder,
   groupField,
+  searchField,
 }: DogQueryFields): DogQuery => {
   const dogQuery: DogQuery = {
     sortField: parseSortField(sortField),
     sortOrder: parseSortOrder(sortOrder),
     groupField: parseGroupField(groupField),
+    searchField: parseSearchField(searchField),
   }
 
   return dogQuery

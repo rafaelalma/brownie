@@ -70,10 +70,12 @@ export type DogQuery = {
   sortField?: DogSortField
   sortOrder?: SortOrder
   groupField?: DogGroupField
+  searchField: string
 }
 
 export type DogQueryFields = {
   sortField: unknown
   sortOrder: unknown
   groupField: unknown
+  searchField: unknown
 }

@@ -30,14 +30,16 @@ router.get('/', async (req, res, next) => {
       query.sortOrder
     )
 
+    const filteredDogs = dogUtils.dogFilterer(sortedDogs, query.searchField)
+
     if (query.groupField) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const groupedDogs = dogUtils.dogGrouper(sortedDogs, query.groupField)
+      const groupedDogs = dogUtils.dogGrouper(filteredDogs, query.groupField)
 
       return res.json(groupedDogs)
     }
 
-    return res.json(sortedDogs)
+    return res.json(filteredDogs)
   } catch (error) {
     return next(error)
   }

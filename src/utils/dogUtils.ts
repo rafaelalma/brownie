@@ -93,4 +93,12 @@ const dogGrouper = (dogs: Dog[], groupField: DogGroupField) => {
   return groupedDogs
 }
 
-export default { dogSorter, dogGrouper }
+const dogFilterer = (dogs: Dog[], searchField: string) => {
+  const filteredDogs = dogs.filter((dog) =>
+    dog.name.toLowerCase().includes(searchField.toLowerCase())
+  )
+
+  return filteredDogs
+}
+
+export default { dogSorter, dogGrouper, dogFilterer }
