@@ -1,5 +1,9 @@
 import { isArray, isString } from './typeCheck'
 import { UserFields, NewUser, Role } from '../types/userType'
+import {
+  INCORRECT_OR_MISSING_PASSWORD_ERROR_MESSAGE,
+  INCORRECT_OR_MISSING_USERNAME_ERROR_MESSAGE,
+} from '../constants/errorMessages'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isRole = (param: any): param is Role => {
@@ -17,7 +21,7 @@ const isArrayOfRoles = (params: unknown[]): params is Role[] => {
 
 const parseUsername = (username: unknown): string => {
   if (!username || !isString(username)) {
-    const typeError = new Error('incorrect or missing username')
+    const typeError = new Error(INCORRECT_OR_MISSING_USERNAME_ERROR_MESSAGE)
     typeError.name = 'TypeError'
     throw typeError
   }
@@ -27,7 +31,7 @@ const parseUsername = (username: unknown): string => {
 
 const parsePassword = (password: unknown): string => {
   if (!password || !isString(password)) {
-    const typeError = new Error('incorrect or missing password')
+    const typeError = new Error(INCORRECT_OR_MISSING_PASSWORD_ERROR_MESSAGE)
     typeError.name = 'TypeError'
     throw typeError
   }

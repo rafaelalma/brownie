@@ -1,5 +1,6 @@
 import { isString, isBoolean, isNumber, isDate } from './typeCheck'
 import { DogFields, NewDog, Sex, Size } from '../types/dogType'
+import { INCORRECT_OR_MISSING_NAME_ERROR_MESSAGE } from '../constants/errorMessages'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isSex = (param: any): param is Sex => {
@@ -15,7 +16,7 @@ const isSize = (param: any): param is Size => {
 
 const parseName = (name: unknown): string => {
   if (!name || !isString(name)) {
-    const typeError = new Error('incorrect or missing name')
+    const typeError = new Error(INCORRECT_OR_MISSING_NAME_ERROR_MESSAGE)
     typeError.name = 'TypeError'
     throw typeError
   }

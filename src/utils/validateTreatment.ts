@@ -1,5 +1,10 @@
 import { isString, isArray } from './typeCheck'
 import { TreatmentFields, NewTreatment, Stage } from '../types/treatmentType'
+import {
+  INCORRECT_OR_MISSING_DOG_ID_ERROR_MESSAGE,
+  INCORRECT_OR_MISSING_NAME_ERROR_MESSAGE,
+  INCORRECT_OR_MISSING_STAGES_ERROR_MESSAGE,
+} from '../constants/errorMessages'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isStage = (param: any): param is Stage => {
@@ -24,7 +29,7 @@ const isArrayOfStages = (params: unknown[]): params is Stage[] => {
 
 const parseName = (name: unknown): string => {
   if (!name || !isString(name)) {
-    const typeError = new Error('incorrect or missing name')
+    const typeError = new Error(INCORRECT_OR_MISSING_NAME_ERROR_MESSAGE)
     typeError.name = 'TypeError'
     throw typeError
   }
@@ -39,7 +44,7 @@ const parseStages = (stages: unknown): Stage[] => {
     !(stages.length > 0) ||
     !isArrayOfStages(stages)
   ) {
-    const typeError = new Error('incorrect or missing stages')
+    const typeError = new Error(INCORRECT_OR_MISSING_STAGES_ERROR_MESSAGE)
     typeError.name = 'TypeError'
     throw typeError
   }
@@ -49,7 +54,7 @@ const parseStages = (stages: unknown): Stage[] => {
 
 const parseDogId = (dogId: unknown): string => {
   if (!dogId || !isString(dogId)) {
-    const typeError = new Error('incorrect or missing dogId')
+    const typeError = new Error(INCORRECT_OR_MISSING_DOG_ID_ERROR_MESSAGE)
     typeError.name = 'TypeError'
     throw typeError
   }
