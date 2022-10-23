@@ -74,7 +74,7 @@ const parseIsSpayedOrNeutered = (
 }
 
 const parseHeight = (height: unknown): number | null => {
-  if (!height || !isNumber(height)) {
+  if (!height || !isNumber(height) || height <= 0) {
     return null
   }
 
@@ -82,7 +82,7 @@ const parseHeight = (height: unknown): number | null => {
 }
 
 const parseLength = (length: unknown): number | null => {
-  if (!length || !isNumber(length)) {
+  if (!length || !isNumber(length) || length <= 0) {
     return null
   }
 
@@ -90,7 +90,7 @@ const parseLength = (length: unknown): number | null => {
 }
 
 const parseWeight = (weight: unknown): number | null => {
-  if (!weight || !isNumber(weight)) {
+  if (!weight || !isNumber(weight) || weight <= 0) {
     return null
   }
 
