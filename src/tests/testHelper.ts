@@ -6,7 +6,7 @@ const initialDogs: NewDog[] = [
   {
     name: 'Dog 1',
     kennel: 'D1',
-    birthDate: new Date('10/30/92'),
+    birthDate: '30/10/1992',
     breed: 'Podenco',
     sex: Sex.Male,
     comments: 'sin comentarios',
@@ -21,7 +21,7 @@ const initialDogs: NewDog[] = [
   {
     name: 'Dog 2',
     kennel: 'D2',
-    birthDate: new Date('12/21/98'),
+    birthDate: '21/12/1998',
     breed: 'Bodeguero',
     sex: Sex.Female,
     comments: 'sin comentarios',

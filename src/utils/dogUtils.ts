@@ -41,11 +41,17 @@ const dogSorter = (
     case DogSortField.BirthDate:
       if (sortOrder === SortOrder.Ascending) {
         return dogs.sort((a, b) =>
-          arrayUtils.dateComparator(a.birthDate, b.birthDate)
+          arrayUtils.dateComparator(
+            a.birthDate ? new Date(a.birthDate) : null,
+            b.birthDate ? new Date(b.birthDate) : null
+          )
         )
       } else {
         return dogs.sort((a, b) =>
-          arrayUtils.dateComparator(b.birthDate, a.birthDate)
+          arrayUtils.dateComparator(
+            b.birthDate ? new Date(b.birthDate) : null,
+            a.birthDate ? new Date(a.birthDate) : null
+          )
         )
       }
     case DogSortField.Height:

@@ -20,7 +20,7 @@ export interface Dog {
   updateTime: Date | null
   name: string
   kennel: string | null
-  birthDate: Date | null
+  birthDate: string | null
   breed: string | null
   sex: Sex | null
   comments: string | null

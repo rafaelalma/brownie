@@ -72,7 +72,7 @@ describe('addition of a new dog', () => {
     const newDog: NewDog = {
       name: 'Dog 3',
       kennel: 'D3',
-      birthDate: new Date('01/01/22'),
+      birthDate: '01/01/2022',
       breed: 'Podenco',
       sex: Sex.Male,
       comments: 'sin comentarios',
@@ -120,7 +120,7 @@ describe('addition of a new dog', () => {
     const newDog: NewDog = {
       name: '',
       kennel: 'D4',
-      birthDate: new Date('01/01/22'),
+      birthDate: '01/01/2022',
       breed: 'Podenco',
       sex: Sex.Female,
       comments: 'sin comentarios',

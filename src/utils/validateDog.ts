@@ -32,12 +32,12 @@ const parseKennel = (kennel: unknown): string | null => {
   return kennel
 }
 
-const parseBirthDate = (birthDate: unknown): Date | null => {
+const parseBirthDate = (birthDate: unknown): string | null => {
   if (!birthDate || !isString(birthDate) || !isDate(birthDate)) {
     return null
   }
 
-  return new Date(birthDate)
+  return birthDate
 }
 
 const parseBreed = (breed: unknown): string | null => {
