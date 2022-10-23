@@ -95,7 +95,7 @@ const dogGrouper = (dogs: Dog[], groupField: DogGroupField) => {
 
 const dogFilterer = (dogs: Dog[], searchField: string) => {
   const filteredDogs = dogs.filter((dog) =>
-    dog.name.toLowerCase().includes(searchField.toLowerCase())
+    dog.name.toLowerCase().startsWith(searchField.toLowerCase())
   )
 
   return filteredDogs
