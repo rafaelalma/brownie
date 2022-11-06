@@ -1,55 +1,54 @@
 import { isString, isArray } from './typeCheck'
-import { TreatmentFields, NewTreatment, Stage } from '../types/treatmentType'
+import {
+  TreatmentFields,
+  NewTreatment,
+  Part,
+  // Step,
+} from '../types/treatmentType'
 import {
   INCORRECT_OR_MISSING_DOG_ID_ERROR_MESSAGE,
-  INCORRECT_OR_MISSING_NAME_ERROR_MESSAGE,
-  INCORRECT_OR_MISSING_STAGES_ERROR_MESSAGE,
+  INCORRECT_OR_MISSING_PARTS_ERROR_MESSAGE,
 } from '../constants/errorMessages'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const isStage = (param: any): param is Stage => {
-  if (
-    (typeof param.medication === 'string' || param.medication === null) &&
-    (typeof param.description === 'string' || param.description === null)
-  ) {
-    return true
-  } else {
-    return false
-  }
-}
-// TODO: validateStage
+// const isStep = (param: any): param is Step => {
+//   return true
+// }
 
-const isArrayOfStages = (params: unknown[]): params is Stage[] => {
-  if (params.some((param) => !isStage(param))) {
+// const isArrayOfSteps = (params: unknown[]): params is Step[] => {
+//   if (params.some((param) => !isStep(param))) {
+//     return false
+//   }
+
+//   return true
+// }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const isPart = (_param: any): _param is Part => {
+  return true
+}
+
+const isArrayOfParts = (params: unknown[]): params is Part[] => {
+  if (params.some((param) => !isPart(param))) {
     return false
   }
 
   return true
 }
 
-const parseName = (name: unknown): string => {
-  if (!name || !isString(name)) {
-    const typeError = new Error(INCORRECT_OR_MISSING_NAME_ERROR_MESSAGE)
-    typeError.name = 'TypeError'
-    throw typeError
-  }
-
-  return name
-}
-
-const parseStages = (stages: unknown): Stage[] => {
+const parseParts = (parts: unknown): Part[] => {
   if (
-    !stages ||
-    !isArray(stages) ||
-    !(stages.length > 0) ||
-    !isArrayOfStages(stages)
+    !parts ||
+    !isArray(parts) ||
+    !(parts.length > 0) ||
+    !isArrayOfParts(parts)
   ) {
-    const typeError = new Error(INCORRECT_OR_MISSING_STAGES_ERROR_MESSAGE)
+    const typeError = new Error(INCORRECT_OR_MISSING_PARTS_ERROR_MESSAGE)
     typeError.name = 'TypeError'
     throw typeError
   }
 
-  return stages
+  return parts
 }
 
 const parseDogId = (dogId: unknown): string => {
@@ -62,14 +61,9 @@ const parseDogId = (dogId: unknown): string => {
   return dogId
 }
 
-const validateTreatment = ({
-  name,
-  stages,
-  dogId,
-}: TreatmentFields): NewTreatment => {
+const validateTreatment = ({ parts, dogId }: TreatmentFields): NewTreatment => {
   const newTreatment: NewTreatment = {
-    name: parseName(name),
-    stages: parseStages(stages),
+    parts: parseParts(parts),
     dogId: parseDogId(dogId),
   }
 

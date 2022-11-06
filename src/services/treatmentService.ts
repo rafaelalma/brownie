@@ -16,7 +16,7 @@ const getTreatment = async (id: string) => {
 }
 
 const addTreatment = async (body: NewTreatment) => {
-  const { name, stages, dogId } = body
+  const { parts, dogId } = body
 
   const dog = await DogModel.findById(dogId)
 
@@ -30,8 +30,7 @@ const addTreatment = async (body: NewTreatment) => {
   const treatment = new TreatmentModel({
     createTime: new Date(),
     updateTime: null,
-    name,
-    stages,
+    parts,
     dog: dog._id,
   })
 
@@ -45,7 +44,7 @@ const deleteTreatment = async (id: string) => {
 }
 
 const updateTreatment = async (id: string, body: NewTreatment) => {
-  const { name, stages, dogId } = body
+  const { parts, dogId } = body
 
   const dog = await DogModel.findById(dogId)
 
@@ -57,8 +56,7 @@ const updateTreatment = async (id: string, body: NewTreatment) => {
 
   const treatment = {
     updateTime: new Date(),
-    name,
-    stages,
+    parts,
     dog: dog._id,
   }
 

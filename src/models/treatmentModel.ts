@@ -6,34 +6,45 @@ import mongoose from 'mongoose'
 const treatmentSchema = new mongoose.Schema({
   createTime: Date,
   updateTime: Date,
-  name: String,
-  stages: [
+  parts: [
     {
-      medication: String,
-      description: String,
+      name: String,
+      steps: [
+        {
+          medication: String,
+          description: String,
+        },
+      ],
     },
   ],
-  dog: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Dog',
-    },
-  ],
+  dog: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Dog',
+  },
 })
 
 treatmentSchema.set('toJSON', {
   transform: (_document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    returnedObject.stages = returnedObject.stages.map((stage: any) => {
+    returnedObject.parts = returnedObject.parts.map((part: any) => {
       return {
-        medication: stage.medication,
-        description: stage.description,
-        id: stage._id.toString(),
+        name: part.name,
+        steps: part.steps.map((step: any) => {
+          return {
+            medication: step.medication,
+            description: step.description,
+            id: step._id.toString(),
+          }
+        }),
+        id: part._id.toString(),
       }
     })
-    returnedObject.stages.forEach((stage: any) => {
-      delete stage._id
+    returnedObject.parts.forEach((part: any) => {
+      part.steps.forEach((step: any) => {
+        delete step._id
+      })
+      delete part._id
     })
+    returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
     delete returnedObject.__v
   },

@@ -23,7 +23,7 @@ export const INCORRECT_OR_MISSING_USERNAME_ERROR_MESSAGE =
   'incorrect or missing username'
 export const INCORRECT_OR_MISSING_PASSWORD_ERROR_MESSAGE =
   'incorrect or missing password'
-export const INCORRECT_OR_MISSING_STAGES_ERROR_MESSAGE =
-  'incorrect or missing stages'
+export const INCORRECT_OR_MISSING_PARTS_ERROR_MESSAGE =
+  'incorrect or missing parts'
 export const INCORRECT_OR_MISSING_DOG_ID_ERROR_MESSAGE =
   'incorrect or missing dogId'

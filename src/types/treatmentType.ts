@@ -1,21 +1,24 @@
-export type Stage = {
+export type Step = {
   medication: string | null
   description: string | null
+}
+
+export type Part = {
+  name: string
+  steps: Step[]
 }
 
 export interface Treatment {
   id: string
   createTime: Date
   updateTime: Date | null
-  name: string
-  stages: Stage[]
+  parts: Part[]
   dogId: string
 }
 
 export type NewTreatment = Omit<Treatment, 'id' | 'createTime' | 'updateTime'>
 
 export type TreatmentFields = {
-  name: unknown
-  stages: unknown[]
+  parts: unknown[]
   dogId: unknown
 }
